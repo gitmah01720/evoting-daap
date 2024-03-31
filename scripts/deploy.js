@@ -9,12 +9,12 @@ const hre = require("hardhat");
 async function main() {
  
 
-  const Create = await hre.ethers.getContractFactory("Create"); // passing contract name.
-  const create = await Create.deploy();
+  const Election = await hre.ethers.getContractFactory("Election"); // passing contract name.
+  const createElection = await Election.deploy();
   
-  await create.deployed();
+  await createElection.deployed();
 
-  console.log("Lock with 1 ETH deployed to:", create.address);
+  console.log("Lock with 1 ETH deployed to:", createElection.address);
 }
 
 // We recommend this pattern to be able to use async/await everywhere

@@ -4,7 +4,7 @@ pragma solidity >= 0.8.9;
 import "@openzeppelin/contracts/utils/Counters.sol"; // counter for voters.
 import "hardhat/console.sol";
 
-contract Create {
+contract Election {
 
     using Counters for Counters.Counter;
 

@@ -11,3 +11,11 @@ GAS_REPORT=true npx hardhat test
 npx hardhat node
 npx hardhat run scripts/deploy.js
 ```
+Running hardhat node:
+```shell
+npx hardhat node # in terminal 1 // to generate addressses.
+
+npx hardhat run --network localhost scripts/deploy.js   # deploy this will give a address which will be used for admin address to read data from files.
+
+
+```
