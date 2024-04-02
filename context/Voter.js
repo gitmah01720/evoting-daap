@@ -6,14 +6,14 @@ import axios from "axios";
 import { useRouter } from "next/router";
 
 // intarnal imports:
-import { VotingAddrss, VotingAddrssAddressABI } from "./constants";
+import { VotingAddress, VotingAddressABI } from "./constants";
 // import reactDom from "react-dom";
 // import { useState } from "react/cjs/react.production.min";
 
 const client = ipfsHttpClient("https://ipfs.infura.io:5001/api/v0");
 
 const fetchContract = (signerOrProvider) =>
-  new ethers.Contract(VotingAddrss, VotingAddrssAddressABI, signerOrProvider);
+  new ethers.Contract(VotingAddress, VotingAddressABI, signerOrProvider);
 
 export const VotingContext = React.createContext();
 export const VotingProvider = ({ children }) => {

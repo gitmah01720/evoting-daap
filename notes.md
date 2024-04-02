@@ -21,3 +21,6 @@ After building contracts
     ```
         this will give a address which will be used for admin address to read data from files.
     ```
+
+## Replacement of IPFS:
+run `python3 -m http.server` in data folder and upload the files from it.
