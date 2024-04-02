@@ -38,7 +38,7 @@ const allowedVoters = () => {
   });
 
 
-
+console.log('fileUrl = ', fileUrl)
   // returning data. with jsx if user uploads image
 
 
@@ -75,7 +75,7 @@ const allowedVoters = () => {
            </p>
           </div>
 
-          <div className = {Style.car}>
+          <div className = {Style.card}>
               {/* {voterArray.map((el,i)=> (
                 <div key = {i+1} className = {Style.card_box}>
                   <div className = {Style.image}>
@@ -105,7 +105,7 @@ const allowedVoters = () => {
               <div className = {Style.voter__container__box__div__info}>
                 <p>upload File: JPG, PNG Max 10MB</p>
                 <div className={Style.voter__container__box__div__image}>
-                  <Image src={images.creator} 
+                  <Image src={images.upload} 
                   width={150} 
                   height={150} 
                   objectFit="contain" 
