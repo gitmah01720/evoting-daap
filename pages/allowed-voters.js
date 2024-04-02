@@ -14,7 +14,8 @@ import Input from "../components/Input/Input"
 
 const allowedVoters = () => {
   const [fileUrl, setFileUrl] = useState(null); // image
-  
+  const [fileimg, setFileimg] = useState([]);
+
   const [formInput, setFormInput] = useState({
     name:"",
     address:"",
@@ -22,14 +23,22 @@ const allowedVoters = () => {
   }); 
 
   const router  = useRouter();
-  const {uploadToIPFS} = useContext(VotingContext);
+  const {uploadToIPFS, createVoter} = useContext(VotingContext);
 
   // voter image drop by user.
   const onDrop = useCallback(async (acceptedFil)=>{
-    const url = await uploadToIPFS(acceptedFil[0]);
+    
+    // const url = await uploadToIPFS(acceptedFil[0]);
+    // console.log(acceptedFil[0]);
+    // setFileimg(acceptedFil[0])
+    // acceptedFil.forEach(file => {
+    //   console.log("Filename = = ",file.name);
+    // })
+    
+    const url = `http://localhost:8000/${acceptedFil[0].name}`;
+    console.log("File Path => ",url);
     setFileUrl(url);
   });
-
 
   const {getRootProps, getInputProps} = useDropzone({
     onDrop,
@@ -129,17 +138,17 @@ console.log('fileUrl = ', fileUrl)
         />
       <Input inputType="text" title="Address" placeholder = "Voter Address"
         handleClick={(e) => 
-          setFormInput({...formInput, name: e.target.value})
+          setFormInput({...formInput, address: e.target.value})
         }
         />
       <Input inputType="text" title="Position" placeholder = "Voter Positions"
         handleClick={(e) => 
-          setFormInput({...formInput, name: e.target.value})
+          setFormInput({...formInput, position: e.target.value})
         }
         />
 
       <div className={Style.Button}>
-        <Button btnName="Autorise Voter" handleClick = {()=> {}}/>
+        <Button btnName="Autorise Voter" handleClick = {()=> createVoter(formInput,fileUrl,router)}/>
       </div>
       </div>
     </div>

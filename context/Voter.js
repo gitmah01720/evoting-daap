@@ -69,8 +69,9 @@ export const VotingProvider = ({ children }) => {
   // ------------- upload to ipfs.
   const uploadToIPFS = async(file)=>{
     try{
-      const added = await client.add({content:file});
-      const url = `https://ipfs.infura.io/ipfs/${added.path}`;
+      // const added = await client.add({content:file});
+      // const url = `https://ipfs.infura.io/ipfs/${added.path}`;
+      const url = `https://ipfs.infura.io/ipfs/${1}`;
       return url;
 
     }catch (error){
@@ -78,8 +79,18 @@ export const VotingProvider = ({ children }) => {
     }
   }
 
+  // -------------------- Creating Voter.
+ const createVoter = async (formInput,fileUrl,router)=>{
+  try{
+    const {name,address,position} = formInput;
+    console.log(`Name = ${name}, adr = ${address} ,pos = ${position} url = ${fileUrl}`)
+  }catch(error){
+    setError("Error in creating voter.")
+  }
+ }
+
   return (
-    <VotingContext.Provider value = {{votingTitle,checkIfWalletConnected,connectWallet,uploadToIPFS}}>
+    <VotingContext.Provider value = {{votingTitle,checkIfWalletConnected,connectWallet,uploadToIPFS,createVoter}}>
     {children}
     </VotingContext.Provider>
   );
