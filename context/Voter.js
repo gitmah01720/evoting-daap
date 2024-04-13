@@ -83,7 +83,25 @@ export const VotingProvider = ({ children }) => {
  const createVoter = async (formInput,fileUrl,router)=>{
   try{
     const {name,address,position} = formInput;
-    console.log(`Name = ${name}, adr = ${address} ,pos = ${position} url = ${fileUrl}`)
+    console.log(`Name = ${name}, adr = ${address} ,pos = ${position} url = ${fileUrl}`);
+    if(!name || !address || !position) return setError("Input data is missing");
+    
+    
+    
+    
+    
+    // -----------Connecting Smart contract--------------------
+    const web3modal = new Web3Modal();
+    // console.log(web3modal);
+
+
+    const connection = await web3modal.connect();
+    const provider  = new ethers.providers.Web3Provider(connection);
+    const signer = provider.getSigner();
+    const contract  = fetchContract(signer);
+
+    console.log(contract);
+
   }catch(error){
     setError("Error in creating voter.")
   }

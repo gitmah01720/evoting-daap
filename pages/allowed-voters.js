@@ -47,7 +47,7 @@ const allowedVoters = () => {
   });
 
 
-console.log('fileUrl = ', fileUrl)
+// console.log('fileUrl = ', fileUrl)
   // returning data. with jsx if user uploads image
 
 
