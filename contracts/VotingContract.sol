@@ -73,7 +73,7 @@ contract Election {
     constructor() {
         votingOrganizer = msg.sender;  // address of first starter will be organiser.
     }
-    // -------------------------- Voter section ---------------------
+    // -------------------------- Candidate section ---------------------
 
     // only executed by manager.
     function setCandidate(address _address, string memory _name,uint _age,string memory _image,string memory _ipfs) public {

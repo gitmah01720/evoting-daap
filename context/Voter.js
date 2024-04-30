@@ -7,6 +7,7 @@ import { useRouter } from "next/router";
 
 // intarnal imports:
 import { VotingAddress, VotingAddressABI } from "./constants";
+import { imageConfigDefault } from "next/dist/shared/lib/image-config";
 // import reactDom from "react-dom";
 // import { useState } from "react/cjs/react.production.min";
 
@@ -100,10 +101,27 @@ export const VotingProvider = ({ children }) => {
     const signer = provider.getSigner();
     const contract  = fetchContract(signer);
 
-    console.log(contract);
+    console.log(contract); // worked fine with web3model version 1.9.8 @gitmah01720 #2:03:00
+
+
+
+    // uploading data to IPFS.
+    // const data = JSON.stringify({name,address,position,image:fileUrl});
+    // const added =  await client.add(data);
+    // const ipfsurl = `https://ipfs.infura.io/ipfs/${added.path}`;
+
+    const ipfsurl = `https://ipfs.infura.io/ipfs/${1}`;
+    console.log(ipfsurl);
+
+    const voter = await contract.setVoter(address,name,fileUrl,ipfsurl);
+    voter.wait();
+    console.log(voter);
+
+    // router.push("/voterList");
 
   }catch(error){
-    setError("Error in creating voter.")
+    console.log(error);
+    setError("Error in creating voter.");
   }
  }
 
