@@ -111,22 +111,86 @@ export const VotingProvider = ({ children }) => {
     // const ipfsurl = `https://ipfs.infura.io/ipfs/${added.path}`;
 
     const ipfsurl = `https://ipfs.infura.io/ipfs/${1}`;
-    console.log(ipfsurl);
+    // console.log(ipfsurl);
 
     const voter = await contract.setVoter(address,name,fileUrl,ipfsurl);
     voter.wait();
     console.log(voter);
 
-    // router.push("/voterList");
+    router.push("/voterList"); // after adding voter redirect to this page.
 
   }catch(error){
     console.log(error);
     setError("Error in creating voter.");
   }
  }
+ 
+ // ----------------------------- get voter data:
+ 
+ const getAllVoterdata = async ()=>{
+  try{
+    // -----------Connecting Smart contract--------------------
+    const web3modal = new Web3Modal();
+    // console.log(web3modal);
+    const connection = await web3modal.connect();
+    const provider  = new ethers.providers.Web3Provider(connection);
+    const signer = provider.getSigner();
+    const contract  = fetchContract(signer);
 
+    console.log(contract); // worked fine with web3model version 1.9.8 @gitmah01720 #2:20:00
+
+
+
+    // getting voter list:
+
+    const voterListData = await contract.getVoterList();
+    setVoterAddress(voterListData);
+    console.log(voterAddress); // gettin all voter list.
+
+
+    voterListData.map(async (el)=>{
+      const singleVoterData = await contract.getVoterDatea(el);
+      pushCandidate.push(singleVoterData);
+      console.log(singleVoterData); // logging single voter info.
+
+    });
+
+    // Voter length:
+    const voterListLen = await contract.getvoterLength();
+    setVoterLength(voterListLen.toNumber());
+
+
+
+
+
+  }catch(error){
+    console.log(error);
+    setError("Error in getting voter.");
+  }
+ }
+
+ console.log(voterAddress);
+ useEffect(()=>{
+   getAllVoterdata();
+
+ },[])
+
+
+
+ // -------------------------- Give voting:
+
+
+
+ // returning functions for other pages.
   return (
-    <VotingContext.Provider value = {{votingTitle,checkIfWalletConnected,connectWallet,uploadToIPFS,createVoter}}>
+    <VotingContext.Provider value = {{
+      votingTitle,
+      checkIfWalletConnected,
+      connectWallet,
+      uploadToIPFS,
+      createVoter,
+      getAllVoterdata
+      }}>
     {children}
     </VotingContext.Provider>
   );

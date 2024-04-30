@@ -21,6 +21,6 @@ After building contracts
     ```
         this will give a address which will be used for admin address to read data from files.
     ```
-
+    // npx hardhat run scripts/deploy.ts --network localhost
 ## Replacement of IPFS:
 run `python3 -m http.server` in data folder and upload the files from it.
