@@ -28,6 +28,7 @@ export const VotingProvider = ({ children }) => {
   const pushCandidate = [];
   const candidateIndex = [];
   const [candidateArray, setCandidateArray] = useState(pushCandidate);
+  const [candidateAddress, setCandidateAddress] = useState([]);
 
   // ---------------- end of candidate data.
 
@@ -43,7 +44,7 @@ export const VotingProvider = ({ children }) => {
   const [voterLength, setVoterLength] = useState('');
   const [voterAddress, setVoterAddress] = useState([]);
   
-  //---------------- connection the wallet metamask;
+  //!---------------- connection the wallet metamask;
 
   // ------------ checking the metamask connectoin
   const checkIfWalletConnected = async() => {
@@ -57,7 +58,7 @@ export const VotingProvider = ({ children }) => {
     }
   }
 
-  // -------------- connecting the wallet.
+  //connecting the wallet.
   const connectWallet  = async()=>{
     if (!window.ethereum) return setError("Meta mask is not installed.")
 
@@ -67,7 +68,7 @@ export const VotingProvider = ({ children }) => {
   }
 
 
-  // ------------- upload to ipfs.
+  //! ------------- upload to ipfs.
   const uploadToIPFS = async(file)=>{
     try{
       // const added = await client.add({content:file});
@@ -80,7 +81,7 @@ export const VotingProvider = ({ children }) => {
     }
   }
 
-  // -------------------- Creating Voter.
+  //! --------------------  Voter Section.
  const createVoter = async (formInput,fileUrl,router)=>{
   try{
     const {name,address,position} = formInput;
@@ -125,7 +126,7 @@ export const VotingProvider = ({ children }) => {
   }
  }
  
- // ----------------------------- get voter data:
+ // get voter data:
  
  const getAllVoterdata = async ()=>{
   try{
@@ -150,7 +151,7 @@ export const VotingProvider = ({ children }) => {
 
     voterListData.map(async (el)=>{
       const singleVoterData = await contract.getVoterDatea(el);
-      pushCandidate.push(singleVoterData);
+      pushCandidate.push(singleVoterData); //! Doubt candi or voter?
       console.log(singleVoterData); // logging single voter info.
 
     });
@@ -177,7 +178,119 @@ export const VotingProvider = ({ children }) => {
 
 
 
- // -------------------------- Give voting:
+ //! --------------------------  voting Section :
+
+  // authorization.
+ const giveVote = async (id)=>{
+  try{
+    // -----------Connecting Smart contract--------------------
+    // const web3modal = new Web3Modal();
+    // const connection = await web3modal.connect();
+    // const provider  = new ethers.providers.Web3Provider(connection);
+    // const signer = provider.getSigner();
+    // const contract  = fetchContract(signer);
+    // console.log(contract); 
+
+
+
+
+  }catch(error){
+    console.log(error);
+    setError("Error in creating voter.");
+  }
+ }
+
+
+ //! -------------------------  candidates sections:
+
+ const createCandidate = async (formInput,fileUrl,router)=>{
+  try{
+    const {name,address,age} = formInput;
+    if(!name || !address || !age) return setError("Input data is missing");
+    const data = JSON.stringify({name,address,age,image:fileUrl});
+    console.log(data);
+    
+
+      // -----------Connecting Smart contract--------------------
+    const web3modal = new Web3Modal();
+    const connection = await web3modal.connect();
+    const provider  = new ethers.providers.Web3Provider(connection);
+    const signer = provider.getSigner();
+    const contract  = fetchContract(signer);
+    console.log(contract); //? worked fine with web3model version 1.9.8 @gitmah01720 #2:03:00
+
+
+
+    // uploading data to IPFS.
+    // const data = JSON.stringify({name,address,age,image:fileUrl});
+    // const added =  await client.add(data);
+    // const ipfsurl = `https://ipfs.infura.io/ipfs/${added.path}`;
+
+    const ipfsurl = `https://ipfs.infura.io/ipfs/${2}/candidate`;
+
+    const candi = await contract.setCandidate(address,name,age,fileUrl,ipfsurl);
+    candi.wait();
+    console.log(candi);
+
+    router.push("/"); // after adding voter redirect to index page.
+
+  }catch(error){
+    console.log(error);
+    setError("Error in creating candidate.");
+  }
+ }
+
+
+ // ------------- get candidate data:
+ 
+ const getAllCandidatedata = async ()=>{
+  try{
+    // -----------Connecting Smart contract--------------------
+    const web3modal = new Web3Modal();
+    const connection = await web3modal.connect();
+    const provider  = new ethers.providers.Web3Provider(connection);
+    const signer = provider.getSigner();
+    const contract  = fetchContract(signer);
+    console.log(contract); 
+    //? worked fine with web3model version 1.9.8 @gitmah01720 #2:20:00
+
+
+
+    // getting candi list:
+
+    const candiListData = await contract.getCandidates();
+    setCandidateAddress(candiListData);
+    console.log(candidateAddress); // gettin all candidates list.
+
+
+    candiListData.map(async (el)=>{
+      const singleCandiData = await contract.getCandidateData(el);
+      pushCandidate.push(singleCandiData);
+      candidateIndex.push(singleCandiData[2].toNumber());
+      console.log(singleCandiData); // logging single voter info.
+
+    });
+
+    // Voter length:
+    const candiListLen = await contract.getCandidateLength();
+    setCandidateLength(candiListLen.toNumber());
+
+
+
+
+
+  }catch(error){
+    console.log(error);
+    setError("Error in getting candi lists.");
+  }
+ }
+
+ console.log(candidateAddress);
+ useEffect(()=>{
+   getAllCandidatedata();
+
+ },[])
+
 
 
 
@@ -189,7 +302,17 @@ export const VotingProvider = ({ children }) => {
       connectWallet,
       uploadToIPFS,
       createVoter,
-      getAllVoterdata
+      getAllVoterdata,
+      giveVote,
+      createCandidate,
+      getAllCandidatedata,
+      error,
+      voterArray,
+      voterLength,
+      voterAddress,
+      currentAccount,
+      candidateLength,
+      candidateAddress
       }}>
     {children}
     </VotingContext.Provider>
