@@ -151,7 +151,7 @@ export const VotingProvider = ({ children }) => {
 
     voterListData.map(async (el)=>{
       const singleVoterData = await contract.getVoterDatea(el);
-      pushCandidate.push(singleVoterData); //! Doubt candi or voter?
+      pushVoter.push(singleVoterData);  // pushing data into voter array.
       console.log(singleVoterData); // logging single voter info.
 
     });
@@ -229,7 +229,7 @@ export const VotingProvider = ({ children }) => {
     const ipfsurl = `https://ipfs.infura.io/ipfs/${2}/candidate`;
 
     const candi = await contract.setCandidate(address,name,age,fileUrl,ipfsurl);
-    candi.wait();
+    // candi.wait();
     console.log(candi);
 
     router.push("/"); // after adding voter redirect to index page.
@@ -312,7 +312,8 @@ export const VotingProvider = ({ children }) => {
       voterAddress,
       currentAccount,
       candidateLength,
-      candidateAddress
+      candidateAddress,
+      candidateArray
       }}>
     {children}
     </VotingContext.Provider>

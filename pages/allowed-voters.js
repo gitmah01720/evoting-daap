@@ -23,7 +23,7 @@ const allowedVoters = () => {
   }); 
 
   const router  = useRouter();
-  const {uploadToIPFS, createVoter} = useContext(VotingContext);
+  const {uploadToIPFS, createVoter,getAllVoterdata,voterArray} = useContext(VotingContext);
 
   // voter image drop by user.
   const onDrop = useCallback(async (acceptedFil)=>{
@@ -50,7 +50,12 @@ const allowedVoters = () => {
 // console.log('fileUrl = ', fileUrl)
   // returning data. with jsx if user uploads image
 
-
+  // taking data into the array.
+  useEffect(() => {
+    getAllVoterdata();
+    console.log(voterArray);  
+  }, [])
+  
 
   return (
   <div className = {Style.createVoter}>
@@ -74,30 +79,30 @@ const allowedVoters = () => {
       { !fileUrl && (
         <div className = {Style.sideInfo}>
           <div className = {Style.sideInfo_box}>
-          <h4>Candidate Data</h4>
+          <h4>Voter Data</h4>
           <p>
             ... Blockchain based voting platform.
           </p>
           
            <p className  = {Style.sideInfo_para}>
-              Candidates..
+              Voters..
            </p>
           </div>
 
           <div className = {Style.card}>
-              {/* {voterArray.map((el,i)=> (
+              {voterArray.map((el,i)=> (
                 <div key = {i+1} className = {Style.card_box}>
                   <div className = {Style.image}>
-                  <img src = {fileUrl} alt = "Profile Image" />
+                  <img src = {el[2]} alt = "Profile Image" />
                   </div>
 
                   <div className = {Style.card_info}>
-                    <p>Name</p>
-                    <p>Address</p>
-                    <p>Details</p>
+                    <p>{el[1]} #VID-{el[0].toNumber()}</p>
+                    <p>Address: {el[3].slice(0,5)}...{el[3].slice(-3)}</p>
+                    <p>Details: Voted={el[4].toString()} |--| voted-to-CID = {el[5].toNumber()}</p>
                   </div>
                 </div>
-              ))} */}
+              ))}
           </div>
         </div>   
       )}

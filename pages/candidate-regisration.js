@@ -23,7 +23,7 @@ const candidateRegistratin = () => {
   }); 
 
   const router  = useRouter();
-  const {uploadToIPFS, createCandidate} = useContext(VotingContext);
+  const {uploadToIPFS, createCandidate,candidateArray,getAllCandidatedata} = useContext(VotingContext);
 
   // voter image drop by user.
   const onDrop = useCallback(async (acceptedFil)=>{
@@ -50,7 +50,12 @@ const candidateRegistratin = () => {
 // console.log('fileUrl = ', fileUrl)
   // returning data. with jsx if user uploads image
 
-
+  // taking data into the array.
+  useEffect(() => {
+    getAllCandidatedata();
+    console.log(candidateArray);  
+  }, [])
+  
 
   return (
   <div className = {Style.createVoter}>
@@ -85,19 +90,19 @@ const candidateRegistratin = () => {
           </div>
 
           <div className = {Style.card}>
-              {/* {voterArray.map((el,i)=> (
+              {candidateArray.map((el,i)=> (
                 <div key = {i+1} className = {Style.card_box}>
                   <div className = {Style.image}>
-                  <img src = {fileUrl} alt = "Profile Image" />
+                  <img src = {el[1]} alt = "Profile Image" />
                   </div>
 
                   <div className = {Style.card_info}>
-                    <p>Name</p>
-                    <p>Address</p>
-                    <p>Details</p>
+                    <p>{el[0]} #CID-{el[4].toNumber()}</p>
+                    <p>Address: {el[6].slice(0,5)}...{el[6].slice(-3)}</p>
+                    <p>Details: age = {el[3].toNumber()} |--| currentvotecount = {el[2].toNumber()} </p>
                   </div>
                 </div>
-              ))} */}
+              ))}
           </div>
         </div>   
       )}
