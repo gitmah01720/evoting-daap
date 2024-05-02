@@ -11,7 +11,7 @@
     grid-template-columns: repeat(2,1fr);
     gap: 2rem ;
     
-
+    
 }
 
 .winner_info{
@@ -32,19 +32,19 @@
     border-radius: 2rem;
     font-size: 5rem;
     color: #b3b8cd;
-    line-height: 0  ;
     position: relative;
     
-
+    
 }
+/* line-height: 0  ; */
 
 
 .winner_message small{
-    font-size: 5rem;
+    /* font-size: 5rem; */
     top: 43%;
     left: 50%;
     transform: translate(-50% -50%);
-    /* align-items: center; */
+    align-items: center;
     /* position: absolute; */
     
 }

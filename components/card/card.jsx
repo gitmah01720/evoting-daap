@@ -8,12 +8,12 @@ import Style from "../card/card.module.css";
 import Button from "../Button/Button";
 
 const card = ({ candidateArray, giveVote }) => {
-  console.log("cards");
-  console.log(candidateArray);
+  // console.log("cards");
+  // console.log(candidateArray);
   return (
     <div className={Style.card}>
       {candidateArray.map((el, i) => (
-        <div className={Style.card_box}>
+        <div key = {i+1} className={Style.card_box}>
           <div className={Style.image}>
             <img src={el[1]} alt="Profile Image" />
           </div>
