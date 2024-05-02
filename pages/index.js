@@ -79,7 +79,7 @@ const index = () => {
           </div>
 
           <div className={Style.winner_message}>
-              <Countdown date={Date.now() + 10000}>
+              <Countdown date={Date.now() + 420000}>
             <small>
                 {candidateArray.length > 0 && (
                   <>
