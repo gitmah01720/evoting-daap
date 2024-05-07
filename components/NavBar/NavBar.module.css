@@ -2,7 +2,8 @@
 .navbar {
     width: 100%;
     height: 5.5rem;
-    background-color: #231e39;
+    /* background-color: #231e39; */
+    background-color: #38170aba;
     box-shadow: 10px 10px 15px rgba(0, 0, 0, 0.35);
     margin-bottom: 2rem;
 }

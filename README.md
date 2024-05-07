@@ -1,21 +1,26 @@
 # Evoting Daap Project
 
-This project demonstrates a basic Hardhat use case. It comes with a sample contract, a test for that contract, and a script that deploys that contract.
+This project aims to develop a distributed secure e-voting system where people can cast their vote securely from their personal devices.  By using Blockchain based system it will increase the voting percentage while saving the time as well as it will be accessible to all.
 
-Try running some of the following tasks:
+Running the Project:
 
+## Install and Test HardHat:
 ```shell
 npx hardhat help
 npx hardhat test
 GAS_REPORT=true npx hardhat test
+```
+
+## Run the Server HardHat and Dev code:
+```shell
+npm run dev
 npx hardhat node
 npx hardhat run scripts/deploy.js
 ```
-Running hardhat node:
+
+## Deploy the code:
 ```shell
-npx hardhat node # in terminal 1 // to generate addressses.
-
-npx hardhat run --network localhost scripts/deploy.js   # deploy this will give a address which will be used for admin address to read data from files.
-
-
+npx hardhat run --network localhost scripts/deploy.js   # deploy this will give a address which will be used for admin address to read data from files. Add this address in context/constant.js file.
 ```
+
+Launch the site at : [EVoting Daap-HOME](http://localhost:3000/)
